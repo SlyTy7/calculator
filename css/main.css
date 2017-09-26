@@ -1,0 +1,50 @@
+body {
+	background-color: lightyellow;
+}
+
+.calc {
+	background-color: gray;
+	text-align: center;
+	margin-top: 100px;
+	padding: 25px 20px;
+	width: 500px;
+	border-radius: 30px;
+	box-shadow: 5px 5px 6px 0px rgba(0,0,0,0.75);
+}
+
+.screen input {
+	margin: 20px auto;
+	height: 50px;
+	font-size: 20px;
+	text-align: right;
+}
+
+.button-container {
+	margin: 0 auto;
+	padding: 10px;
+}
+
+.button-container button{
+	font-size: 32px;
+	width: 80%;
+	border-radius: 7px;
+}
+
+.edit-button {
+	background-color: darkgrey;
+	border-color: darkgrey;
+}
+
+.number-button{
+	background-color: lightgrey;
+	border-color: lightgrey;
+}
+.operator-button {
+	background-color: salmon;
+	border-color: 	salmon;
+}
+
+.equals-button {
+	background-color: lightgreen;
+	border-color: 	lightgreen;
+}
