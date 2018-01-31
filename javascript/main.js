@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	var result = 0;
-	var prevEntry = 0;
-	var currentEntry = "0";
-	updateScreen(result);
+	var prevNum;
+	var currentNum = '';
+  var operation;
+	updateScreen('0');
 
 
 	//function that sees what button is pressed and then changes the screen to reflect that
@@ -10,35 +10,42 @@ $(document).ready(function(){
 		var buttonPressed = $(this).html();
 
 		if(buttonPressed === "C"){
-			result = 0;
-			currentEntry = "0";
+        prevNum = undefined;
+			  currentNum = '';
+        updateScreen(0);
 		}else if (buttonPressed === "CE") {
-      		currentEntry = '0';
-    	}else if (buttonPressed === "BK") {
-    		currentEntry = currentEntry.substring(0, currentEntry.length - 1);
-    	}else if (buttonPressed === "+/-") {
-      		currentEntry *= -1;
-    	}else if (buttonPressed === ".") {
-      		currentEntry += ".";
-    	}else if (isNumber(buttonPressed)) {
-      		if (currentEntry === '0'){
-      			currentEntry = buttonPressed;
-      		}else {
-      			currentEntry = currentEntry + buttonPressed;
-      		}
-    	}else if (isOperator(buttonPressed)) {
-      		prevEntry = parseFloat(currentEntry);
-      		operation = buttonPressed;
-      		currentEntry = '';
-    	}else if (buttonPressed === '=') {
-      		currentEntry = operate(prevEntry, currentEntry, operation);
-      		operation = null;
-    	}
-
-
-    	updateScreen(currentEntry);
+        currentNum = '';
+      	updateScreen(0);
+    }else if (buttonPressed === "BK") {
+        currentNum = currentNum.substring(0, currentNum.length - 1);
+    		updateScreen(currentNum);
+  	}else if (buttonPressed === "+/-") {
+        currentNum = (parseFloat(currentNum) * -1).toString();
+        console.log(currentNum);
+      	updateScreen(currentNum);
+  	}else if (buttonPressed === ".") {
+        currentNum += ".";
+        updateScreen(currentNum);
+  	}else if (isNumber(buttonPressed)) {
+        currentNum += buttonPressed;
+        updateScreen(currentNum);
+    }else if (isOperator(buttonPressed)) {
+        //saves number on screen to prevNum
+        prevNum = operate(prevNum, currentNum, operation);
+        //resets currentNum
+        currentNum = '';
+        //saves its operation
+        operation = buttonPressed;
+        updateScreen(prevNum);
+    }else if (buttonPressed === '=') {
+        currentNum = operate(prevNum, currentNum, operation);
+        //resets prevNum and operation
+        prevNum = undefined;
+        operation = undefined;
+        updateScreen(currentNum);
+    }
 	});
-
+  
 });
 
 //function that updates screen
@@ -58,11 +65,16 @@ function isOperator(value) {
 }
 
 function operate(x, y, operation){
-	x = parseFloat(x);
-	y = parseFloat(y);
 	
-	if (operation === '+') return x + y;
- 	if (operation === '-') return x - y;
- 	if (operation === '*') return x * y;
- 	if (operation === '/') return x / y;
+  if(x == undefined && operation == undefined){
+    return parseFloat(y);
+  }else{
+    x = parseFloat(x);
+    y = parseFloat(y);
+
+    if (operation === '+') return x + y;
+    if (operation === '-') return x - y;
+    if (operation === '*') return x * y;
+    if (operation === '/') return x / y;
+  }
 }
